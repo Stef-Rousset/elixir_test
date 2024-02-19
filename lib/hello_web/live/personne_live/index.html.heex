@@ -1,0 +1,42 @@
+<.header>
+  Listing Personnes
+  <:actions>
+    <.link patch={~p"/personnes/new"}>
+      <.button>New Personne</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="personnes"
+  rows={@streams.personnes}
+  row_click={fn {_id, personne} -> JS.navigate(~p"/personnes/#{personne}") end}
+>
+  <:col :let={{_id, personne}} label="Nom"><%= personne.nom %></:col>
+  <:col :let={{_id, personne}} label="Prenom"><%= personne.prenom %></:col>
+  <:action :let={{_id, personne}}>
+    <div class="sr-only">
+      <.link navigate={~p"/personnes/#{personne}"}>Show</.link>
+    </div>
+    <.link patch={~p"/personnes/#{personne}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, personne}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: personne.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="personne-modal" show on_cancel={JS.patch(~p"/personnes")}>
+  <.live_component
+    module={HelloWeb.PersonneLive.FormComponent}
+    id={@personne.id || :new}
+    title={@page_title}
+    action={@live_action}
+    personne={@personne}
+    patch={~p"/personnes"}
+  />
+</.modal>

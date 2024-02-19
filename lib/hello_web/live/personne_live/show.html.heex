@@ -1,0 +1,27 @@
+<.header>
+  Personne <%= @personne.id %>
+  <:subtitle>This is a personne record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/personnes/#{@personne}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit personne</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Nom"><%= @personne.nom %></:item>
+  <:item title="Prenom"><%= @personne.prenom %></:item>
+</.list>
+
+<.back navigate={~p"/personnes"}>Back to personnes</.back>
+
+<.modal :if={@live_action == :edit} id="personne-modal" show on_cancel={JS.patch(~p"/personnes/#{@personne}")}>
+  <.live_component
+    module={HelloWeb.PersonneLive.FormComponent}
+    id={@personne.id}
+    title={@page_title}
+    action={@live_action}
+    personne={@personne}
+    patch={~p"/personnes/#{@personne}"}
+  />
+</.modal>

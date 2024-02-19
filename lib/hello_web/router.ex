@@ -20,6 +20,14 @@ defmodule HelloWeb.Router do
     get "/", PageController, :home
 
     resources "/users", UserController
+
+
+    live "/personnes", PersonneLive.Index, :index
+    live "/personnes/new", PersonneLive.Index, :new
+    live "/personnes/:id/edit", PersonneLive.Index, :edit
+
+    live "/personnes/:id", PersonneLive.Show, :show
+    live "/personnes/:id/show/edit", PersonneLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

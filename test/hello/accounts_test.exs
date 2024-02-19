@@ -58,4 +58,60 @@ defmodule Hello.AccountsTest do
       assert %Ecto.Changeset{} = Accounts.change_user(user)
     end
   end
+
+  describe "personnes" do
+    alias Hello.Accounts.Personne
+
+    import Hello.AccountsFixtures
+
+    @invalid_attrs %{nom: nil, prenom: nil}
+
+    test "list_personnes/0 returns all personnes" do
+      personne = personne_fixture()
+      assert Accounts.list_personnes() == [personne]
+    end
+
+    test "get_personne!/1 returns the personne with given id" do
+      personne = personne_fixture()
+      assert Accounts.get_personne!(personne.id) == personne
+    end
+
+    test "create_personne/1 with valid data creates a personne" do
+      valid_attrs = %{nom: "some nom", prenom: "some prenom"}
+
+      assert {:ok, %Personne{} = personne} = Accounts.create_personne(valid_attrs)
+      assert personne.nom == "some nom"
+      assert personne.prenom == "some prenom"
+    end
+
+    test "create_personne/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Accounts.create_personne(@invalid_attrs)
+    end
+
+    test "update_personne/2 with valid data updates the personne" do
+      personne = personne_fixture()
+      update_attrs = %{nom: "some updated nom", prenom: "some updated prenom"}
+
+      assert {:ok, %Personne{} = personne} = Accounts.update_personne(personne, update_attrs)
+      assert personne.nom == "some updated nom"
+      assert personne.prenom == "some updated prenom"
+    end
+
+    test "update_personne/2 with invalid data returns error changeset" do
+      personne = personne_fixture()
+      assert {:error, %Ecto.Changeset{}} = Accounts.update_personne(personne, @invalid_attrs)
+      assert personne == Accounts.get_personne!(personne.id)
+    end
+
+    test "delete_personne/1 deletes the personne" do
+      personne = personne_fixture()
+      assert {:ok, %Personne{}} = Accounts.delete_personne(personne)
+      assert_raise Ecto.NoResultsError, fn -> Accounts.get_personne!(personne.id) end
+    end
+
+    test "change_personne/1 returns a personne changeset" do
+      personne = personne_fixture()
+      assert %Ecto.Changeset{} = Accounts.change_personne(personne)
+    end
+  end
 end

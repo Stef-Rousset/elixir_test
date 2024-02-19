@@ -18,4 +18,19 @@ defmodule Hello.AccountsFixtures do
 
     user
   end
+
+  @doc """
+  Generate a personne.
+  """
+  def personne_fixture(attrs \\ %{}) do
+    {:ok, personne} =
+      attrs
+      |> Enum.into(%{
+        nom: "some nom",
+        prenom: "some prenom"
+      })
+      |> Hello.Accounts.create_personne()
+
+    personne
+  end
 end

@@ -101,4 +101,100 @@ defmodule Hello.Accounts do
   def change_user(%User{} = user, attrs \\ %{}) do
     User.changeset(user, attrs)
   end
+
+  alias Hello.Accounts.Personne
+
+  @doc """
+  Returns the list of personnes.
+
+  ## Examples
+
+      iex> list_personnes()
+      [%Personne{}, ...]
+
+  """
+  def list_personnes do
+    Repo.all(Personne)
+  end
+
+  @doc """
+  Gets a single personne.
+
+  Raises `Ecto.NoResultsError` if the Personne does not exist.
+
+  ## Examples
+
+      iex> get_personne!(123)
+      %Personne{}
+
+      iex> get_personne!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_personne!(id), do: Repo.get!(Personne, id)
+
+  @doc """
+  Creates a personne.
+
+  ## Examples
+
+      iex> create_personne(%{field: value})
+      {:ok, %Personne{}}
+
+      iex> create_personne(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_personne(attrs \\ %{}) do
+    %Personne{}
+    |> Personne.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a personne.
+
+  ## Examples
+
+      iex> update_personne(personne, %{field: new_value})
+      {:ok, %Personne{}}
+
+      iex> update_personne(personne, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_personne(%Personne{} = personne, attrs) do
+    personne
+    |> Personne.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a personne.
+
+  ## Examples
+
+      iex> delete_personne(personne)
+      {:ok, %Personne{}}
+
+      iex> delete_personne(personne)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_personne(%Personne{} = personne) do
+    Repo.delete(personne)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking personne changes.
+
+  ## Examples
+
+      iex> change_personne(personne)
+      %Ecto.Changeset{data: %Personne{}}
+
+  """
+  def change_personne(%Personne{} = personne, attrs \\ %{}) do
+    Personne.changeset(personne, attrs)
+  end
 end
