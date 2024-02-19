@@ -21,7 +21,6 @@ defmodule HelloWeb.Router do
 
     resources "/users", UserController
 
-
     live "/personnes", PersonneLive.Index, :index
     live "/personnes/new", PersonneLive.Index, :new
     live "/personnes/:id/edit", PersonneLive.Index, :edit

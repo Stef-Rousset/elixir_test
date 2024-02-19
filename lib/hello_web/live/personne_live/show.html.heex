@@ -15,7 +15,12 @@
 
 <.back navigate={~p"/personnes"}>Back to personnes</.back>
 
-<.modal :if={@live_action == :edit} id="personne-modal" show on_cancel={JS.patch(~p"/personnes/#{@personne}")}>
+<.modal
+  :if={@live_action == :edit}
+  id="personne-modal"
+  show
+  on_cancel={JS.patch(~p"/personnes/#{@personne}")}
+>
   <.live_component
     module={HelloWeb.PersonneLive.FormComponent}
     id={@personne.id}
